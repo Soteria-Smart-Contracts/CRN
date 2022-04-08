@@ -187,18 +187,22 @@ export function MintArea({ contract }) {
       if (
         errorMsg.indexOf("err: insufficient funds for gas * price + value:") !==
         -1
-      )
+      ) {
         errorMsg = "Insufficient Funds";
-      console.log(errorMsg);
-      toast.error(errorMsg, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+        toast.error(errorMsg, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }        
+      else {
+        errorMsg = "";
+        console.log(errorMsg);
+      }
     }
   }
 
@@ -220,6 +224,7 @@ export function MintArea({ contract }) {
 
     // console.log("gasEstimation: ", ethers.utils.formatUnits(estimateGas, 9));
     // console.log("errorMargin: ", ethers.utils.formatUnits(errorMargin, 9));
+    console.log(contract);
     await contract.mint(amount, {
       value: tokenPrice.mul(amount),
     });

@@ -165,7 +165,7 @@ export function ConnectButton({ setContract }) {
   }
 
   async function setContracts(signer) {
-    if(mainC && Number(await mainC.totalSupply()) > 500) {
+    if(mainC && Number(await mainC.totalSupply()) >= 150) {
       const _contract = new ethers.Contract(
         ClassicRewards.subAddress,
         ClassicRewards.abi,
