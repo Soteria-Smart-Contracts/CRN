@@ -16,7 +16,7 @@ export function ConnectButton({ setContract }) {
   let web3Modal;
   const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID
     ? Number(process.env.NEXT_PUBLIC_CHAIN_ID)
-    : 56;
+    : 97;
 
   useEffect(() => {
     listenToProviderEvents();
