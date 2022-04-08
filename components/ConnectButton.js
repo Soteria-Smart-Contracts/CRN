@@ -12,6 +12,7 @@ export function ConnectButton({ setContract }) {
   const [provider, setProvider] = useState(null);
   const [network, setNetwork] = useState(null);
   const [address, setAddress] = useState(null);
+  const [mainC, setMainC] = useState(null);
   let web3Modal;
   const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID
     ? Number(process.env.NEXT_PUBLIC_CHAIN_ID)
@@ -119,7 +120,7 @@ export function ConnectButton({ setContract }) {
         return;
       }
 
-      getContracts();
+      await getContracts();
 
       async function getContracts() {
         const _contract = new ethers.Contract(
@@ -128,7 +129,9 @@ export function ConnectButton({ setContract }) {
           signer
         );
         setContract(_contract);
+        setMainC(_contract);
       }
+      await setContracts(signer);
     } catch (error) {
       if (
         error.message === "User closed modal" ||
@@ -159,5 +162,16 @@ export function ConnectButton({ setContract }) {
     await web3Modal.off();
 
     console.log("disconnected");
+  }
+
+  async function setContracts(signer) {
+    if(mainC && Number(await mainC.totalSupply()) > 500) {
+      const _contract = new ethers.Contract(
+        ClassicRewards.subAddress,
+        ClassicRewards.abi,
+        signer
+      );
+      setContract(_contract);
+    }
   }
 }

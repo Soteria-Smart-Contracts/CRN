@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import "react-toastify/dist/ReactToastify.css";
 import ClassicRewards from "../abi/classicRwards.json"
+import Web3 from "web3";
 
 export function MintArea({ contract }) {
   const [amount, setAmount] = useState(1);
@@ -18,13 +19,16 @@ export function MintArea({ contract }) {
   // console.log("State: ", isPaused, presaleEnd);
 
   const MAX_SUPPLY = 6000;
+  const web3 = window.ethereum ? new Web3(window.ethereum) : null;
+  const mainCont = new web3.eth.Contract(ClassicRewards.abi, ClassicRewards.address);
 
   useEffect(() => {
     (async () => {
       // console.log("CONTRACT: ", contract);
       if (contract) {
         try {
-          const _isPaused = await contract.paused();
+          const _isPaused = await mainCont.methods.paused().call();
+          console.log(_isPaused);
           setIsPaused(_isPaused);
         } catch (e) {
           // alert("TODO message");
@@ -42,7 +46,8 @@ export function MintArea({ contract }) {
         }
 
         try {
-          const _total = await contract.totalSupply();
+          const _total = await mainCont.methods.totalSupply().call();
+          console.log(_total);
           setTotalSupply(Number(_total));
         } catch (e) {
           // alert("TODO message");
@@ -159,16 +164,7 @@ export function MintArea({ contract }) {
     try {
       setLoadingTx(true);
       const currentTimestamp = new Date().getTime();
-      let mintedAmount = await contract.totalSupply();
-      if(Number(mintedAmount) > 500) {
-        const _provider = new ethers.providers.Web3Provider(instance);
-        const signer = _provider.getSigner();
-        contract = new ethers.Contract(
-          ClassicRewards.subAddress,
-          ClassicRewards.abi,
-          signer
-        );
-      }
+      let mintedAmount = await mainCont.methods.totalSupply().call();
       const tx = await publicMint();
       setAmount(1);
       const receipt = await tx.wait();
@@ -178,7 +174,7 @@ export function MintArea({ contract }) {
         setMintMore(true);
       } else {
         console.log("transaction failed!");
-      }s
+      }
       setTotalSupply(Number(mintedAmount));
     } catch (error) {
       setLoadingTx(false);
@@ -217,7 +213,7 @@ export function MintArea({ contract }) {
     // );
 
     console.log(contract);
-    const tokenPrice = await contract.cost();
+    const tokenPrice = await ethers.BigNumber.from(await mainCont.methods.cost().call());
     console.log(tokenPrice);
 
     // const val = (tokenPrice * amount)
