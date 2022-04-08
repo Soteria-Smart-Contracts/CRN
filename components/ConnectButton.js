@@ -3,7 +3,7 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import { Button } from "@chakra-ui/react";
-import ClassicRewards from "../abi/classicRwards.json";
+import ClassicRewards from "../abi/classicRwards(testnet).json";
 
 // import { contractAddress } from "../config/contractAddress";
 // import { contractABI } from "../config/abi";
@@ -16,7 +16,7 @@ export function ConnectButton({ setContract }) {
   let web3Modal;
   const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID
     ? Number(process.env.NEXT_PUBLIC_CHAIN_ID)
-    : 56;
+    :97;
 
   useEffect(() => {
     listenToProviderEvents();
