@@ -88,8 +88,11 @@ const MobileMenu = ({ setContract }) => {
                 <MobileNavButton targetElementId="lore" label="LORE" onClose={onClose} />
                 <MobileNavButton targetElementId="roadmap" label="ROADMAP" onClose={onClose} />
                 <MobileNavButton targetElementId="team" label="TEAM" onClose={onClose} />
-                <MobileNavButton target="_blank" href="https://crn-wallet.netlify.app" label="MY WALLET" onClose={onClose} />
-                
+                <ListItem mb={3}>
+                  <a href="https://crn-wallet.netlify.app/" target="_blank">
+                    MY WALLET
+                  </a>
+                </ListItem>
                 <MobileNavButton targetElementId="faq" label="FAQ" onClose={onClose} />
               </UnorderedList>
               <HStack gap={4} justifyContent="center" borderTop="1px dashed rgba(255, 255, 255, 0.2)" pt={5}>
