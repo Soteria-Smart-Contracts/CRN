@@ -6,7 +6,7 @@ import { Center, Input, Button, Box, Heading, Text } from "@chakra-ui/react";
 import { ToastContainer, toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import "react-toastify/dist/ReactToastify.css";
-import ClassicRewards from "../abi/classicRwards.json"
+import ClassicRewards from "../abi/classicRwards.json" ;
 import Web3 from "web3";
 
 export function MintArea({ contract }) {
