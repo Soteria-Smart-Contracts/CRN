@@ -91,6 +91,7 @@ const MobileMenu = ({ setContract }) => {
                 <ListItem mb={3}>
                   <a href="https://crn-wallet.netlify.app" target="_blank">
                     MY WALLET
+                  </a>
                 </ListItem>
                 <MobileNavButton targetElementId="faq" label="FAQ" onClose={onClose} />
               </UnorderedList>
